@@ -65,11 +65,13 @@ toDigits n
 toDigitsRev :: Integer -> [Integer]
 toDigitsRev n = reverse (toDigits n)
     
+lastSecond :: [a] -> a
+lastSecond ls = head (drop ((length ls)-2) ls)
 
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther [] = []
 doubleEveryOther (x:[]) = [x]
-doubleEveryOther zs = (doubleEveryOther (take ((length zs)-2) zs)) ++ [2*(zs !! ((length zs) - 2)), (last zs)]
+doubleEveryOther zs = (doubleEveryOther (take ((length zs)-2) zs)) ++ [2*(lastSecond zs), (last zs)]
 
 sumDigits :: [Integer] -> Integer
 sumDigits [] = 0
@@ -116,3 +118,4 @@ getAge :: Person -> Int
 getAge (Person _ a _) = a
 
 personList = [dinesh, ajjai]
+
