@@ -15,7 +15,7 @@ doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
 boomBangs :: [Int] -> [String]
 boomBangs ls = [ if x > 10 then "BANG!" else "BOOM!" | x <- ls, odd x]
 
-length' :: Num a => [t] -> a
+length' ::  [a] -> Integer
 length' ls = sum [1 | _ <- ls]
 
 square :: Int -> Int
@@ -57,8 +57,6 @@ hailstoneLen n = intListLength (hailstoneSeq n) - 1
 
 -- Exercise Problem Solutions of cis194 first chapter
 
--- Credit Card Validation Problem
-
 toDigits :: Integer -> [Integer]
 toDigits n
   | n <= 0 = []
@@ -80,5 +78,41 @@ sumDigits (x:xs) = (sum (toDigits x)) + (sumDigits xs)
 validate :: Integer -> Bool
 validate n = (mod (sumDigits (doubleEveryOther (toDigits n))) 10) == 0
 
--- Towers of Hanoi Problem
+-- Algebraic Data Types : Chapter-2
 
+data Thing = Shoe
+           | Ship
+           | SealingWax
+           | Cabbage
+           | King
+           deriving Show
+             
+shoe :: Thing
+shoe = Shoe
+
+isSmall :: Thing -> Bool
+isSmall Ship = False
+isSmall King = False
+isSmall _ = True
+
+data FailableDouble = Failure
+                    | OK Double
+                    deriving Show
+
+safeDiv :: Double -> Double -> FailableDouble
+safeDiv _ 0 = Failure
+safeDiv x y = OK (x / y)
+
+data Person = Person String Int Thing
+            deriving Show
+
+dinesh :: Person
+dinesh = Person "Dinesh" 22 Shoe
+
+ajjai :: Person
+ajjai = Person "Ajjai" 32 Ship
+
+getAge :: Person -> Int
+getAge (Person _ a _) = a
+
+personList = [dinesh, ajjai]
