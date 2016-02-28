@@ -105,11 +105,16 @@ safeDiv :: Double -> Double -> FailableDouble
 safeDiv _ 0 = Failure
 safeDiv x y = OK (x / y)
 
+failureToZero :: FailableDouble -> Double
+failureToZero x  = case x of
+                       Failure -> 0
+                       OK d -> d
+
 data Person = Person String Int Thing
             deriving Show
 
 dinesh :: Person
-dinesh = Person "Dinesh" 22 Shoe
+dinesh = Person "Dinesh" 22 King
 
 ajjai :: Person
 ajjai = Person "Ajjai" 32 Ship
@@ -117,5 +122,9 @@ ajjai = Person "Ajjai" 32 Ship
 getAge :: Person -> Int
 getAge (Person _ a _) = a
 
+getName :: Person -> String
+getName (Person a _ _) =  a  
+
 personList = [dinesh, ajjai]
 
+personDesc = [ getName(person) ++ " : "  ++ (show (getAge(person))) | person <- personList]
