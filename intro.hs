@@ -57,6 +57,8 @@ hailstoneLen n = intListLength (hailstoneSeq n) - 1
 
 -- Exercise Problem Solutions of cis194 first chapter
 
+-- Credit Card Validator
+
 toDigits :: Integer -> [Integer]
 toDigits n
   | n <= 0 = []
@@ -80,6 +82,7 @@ sumDigits (x:xs) = (sum (toDigits x)) + (sumDigits xs)
 validate :: Integer -> Bool
 validate n = (mod (sumDigits (doubleEveryOther (toDigits n))) 10) == 0
 
+ 
 -- Algebraic Data Types : Chapter-2
 
 data Thing = Shoe
