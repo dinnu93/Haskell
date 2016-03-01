@@ -82,6 +82,14 @@ sumDigits (x:xs) = (sum (toDigits x)) + (sumDigits xs)
 validate :: Integer -> Bool
 validate n = (mod (sumDigits (doubleEveryOther (toDigits n))) 10) == 0
 
+-- Towers of Hanoi Problem
+
+type Peg = String
+type Move = (Peg, Peg)
+
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi 1 first last temp = [(first,last)]
+hanoi n first last temp = (hanoi (n-1) first temp last) ++ (hanoi 1 first last temp) ++ (hanoi (n-1) temp last first)
  
 -- Algebraic Data Types : Chapter-2
 
