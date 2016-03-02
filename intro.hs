@@ -139,3 +139,16 @@ getName (Person a _ _) =  a
 personList = [dinesh, ajjai]
 
 personDesc = [ getName(person) ++ " : "  ++ (show (getAge(person))) | person <- personList]
+
+-- Recursive Data Types
+
+data IntList = Empty | Cons Int IntList
+
+intListSum :: IntList -> Int
+intListSum Empty = 0
+intListSum (Cons i ls) = i + intListSum ls
+
+intListProduct :: IntList -> Int
+intListProduct Empty = 1
+intListProduct (Cons i ls) = i * intListProduct ls
+
