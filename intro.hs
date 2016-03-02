@@ -142,7 +142,12 @@ personDesc = [ getName(person) ++ " : "  ++ (show (getAge(person))) | person <- 
 
 -- Recursive Data Types
 
+-- Lists
+
 data IntList = Empty | Cons Int IntList
+
+ls :: IntList
+ls = (Cons 1 (Cons 2 (Cons 3 (Cons 4 Empty))))
 
 intListSum :: IntList -> Int
 intListSum Empty = 0
@@ -152,3 +157,11 @@ intListProduct :: IntList -> Int
 intListProduct Empty = 1
 intListProduct (Cons i ls) = i * intListProduct ls
 
+-- Trees
+
+data Tree = Leaf Char
+          | Node Tree Int Tree
+          deriving Show
+
+tree :: Tree
+tree = Node (Leaf 'a') 1 (Node (Leaf 'b') 2 (Leaf 'c'))
