@@ -24,13 +24,24 @@ square x = x*x
 rightTriangles :: [(Int, Int, Int)]
 rightTriangles = [(z,y,x) | x <- [1..10], y <- [1..x],z <- [1..y], y^2 + z^2 == x^2, x + y + z == 24]
 
-factorial :: Integer -> Integer
+factorial :: (Integral a) => a -> a
 factorial 0 =  1
 factorial n = n * (factorial (n-1))
 
-sumtorial :: Integer -> Integer
+sumtorial :: (Integral a) => a -> a
 sumtorial 0 = 0
 sumtorial n = n + sumtorial (n-1)
+
+lucky :: (Eq a,Num a) => a -> String
+lucky 7 = "Lucky Number Seven!"
+lucky x = "Don't you know my lucky number dummy?"
+
+addVectors :: (Num a) => (a,a) -> (a,a) -> (a,a)
+addVectors (x1,y1) (x2,y2) = (x1 + x2, y1 + y2)
+
+firstLetter :: String -> String
+firstLetter [] = "Empty string!"
+firstLetter a@(x:_) = "The first letter of " ++ a ++ " is " ++ [x]
 
 -- Look Up for Collatz Conjecture
 hailstone :: Integer -> Integer
