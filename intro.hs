@@ -43,6 +43,47 @@ firstLetter :: String -> String
 firstLetter [] = "Empty string!"
 firstLetter a@(x:_) = "The first letter of " ++ a ++ " is " ++ [x]
 
+bmiTell :: (RealFloat a) => a -> a  -> String
+bmiTell weight height
+  | bmi <= 18.5 = "You're underweight, Eat something!"
+  | bmi <= 25.0 = "You're normal, I bet you're ugly!"
+  | bmi <= 30.0 = "You're fat! Eat less!"
+  | otherwise = "You're a whale, Congratulations!"
+  where bmi = weight / (height^2) 
+
+max' :: (Ord a) => a -> a -> a
+max' a b
+  | a > b = a
+  | otherwise = b
+
+maxList :: (Ord a) => [a] -> a
+maxList [] = error "No max element in the empty list dummy!"
+maxList [x] = x
+maxList (x:xs) = max' x (maxList xs)
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea = 2 * pi * r * h
+      topArea = pi * r^2
+  in sideArea + 2 * topArea
+
+replicate' :: (Num i, Ord i) => i -> a -> [a]
+replicate' n x
+  | n <= 0 = []
+  | otherwise = x:replicate' (n-1) x
+
+zip' :: [a] -> [b] -> [(a,b)]
+zip' _ [] = []
+zip' [] _ = []
+zip' (x:xs) (y:ys) = (x,y) : zip' xs ys
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) =
+  let smallSorted = quicksort [a | a <- xs, a <= x]
+      bigSorted = quicksort [a | a <- xs, a > x]
+  in smallSorted ++ [x] ++ bigSorted
+  
 -- Look Up for Collatz Conjecture
 hailstone :: Integer -> Integer
 hailstone n
