@@ -84,6 +84,22 @@ quicksort (x:xs) =
       bigSorted = quicksort [a | a <- xs, a > x]
   in smallSorted ++ [x] ++ bigSorted
 
+-- Higher Order Functions
+
+compareWithHundred :: (Num a, Ord a) => a -> Ordering
+compareWithHundred  = compare 100 
+
+divideByTen :: (Floating a) => a -> a
+divideByTen = (/10)
+
+applyTwice :: (a -> a) -> a -> a
+applyTwice f x = f (f x)
+
+zipwith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipwith' _ [] _ = []
+zipwith' _ _ [] = []
+zipwith' f (x:xs) (y:ys) = (f x y) : zipwith' f xs ys
+
 
 
 -- Look Up for Collatz Conjecture
