@@ -100,8 +100,30 @@ zipwith' _ [] _ = []
 zipwith' _ _ [] = []
 zipwith' f (x:xs) (y:ys) = (f x y) : zipwith' f xs ys
 
+map' :: (a -> b) -> [a] -> [b]
+map' _ [] = []
+map' f (x:xs) = f x : map' f xs
 
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' f (x:xs)
+  | f x = x : filter' f xs
+  | otherwise = filter' f xs
 
+factor :: (Integral a) => a -> a -> Bool
+factor n x = mod n x == 0 
+
+factorList :: (Integral a) => a -> [a]
+factorList x = filter (factor x) [2..(floor (sqrt (fromIntegral x)))]
+
+prime :: (Integral a) => a -> Bool
+prime x
+  | x == 1 = False
+  | otherwise = factorList x == []
+
+primesBelowN :: (Integral a) => a -> [a]
+primesBelowN n = filter prime [1..n]
+  
 -- Look Up for Collatz Conjecture
 hailstone :: Integer -> Integer
 hailstone n
