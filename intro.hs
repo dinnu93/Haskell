@@ -80,8 +80,8 @@ zip' (x:xs) (y:ys) = (x,y) : zip' xs ys
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
 quicksort (x:xs) =
-  let smallSorted = quicksort [a | a <- xs, a <= x]
-      bigSorted = quicksort [a | a <- xs, a > x]
+  let smallSorted = quicksort (filter (<=x) xs)
+      bigSorted = quicksort (filter (>x) xs)
   in smallSorted ++ [x] ++ bigSorted
 
 -- Higher Order Functions
@@ -119,7 +119,7 @@ factorList x = filter (factor x) [2..(floor (sqrt (fromIntegral x)))]
 prime :: (Integral a) => a -> Bool
 prime x
   | x == 1 = False
-  | otherwise = factorList x == []
+  | otherwise = null (factorList x) 
 
 primesBelowN :: (Integral a) => a -> [a]
 primesBelowN n = filter prime [1..n]
