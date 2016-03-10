@@ -123,14 +123,31 @@ prime x
 
 primesBelowN :: (Integral a) => a -> [a]
 primesBelowN n = filter prime [1..n]
+
+largestDivisible :: (Integral a) => a
+largestDivisible = head (filter (`factor`3829) [10000,9999..])
+
+-- List of Fibonacci numbers until F(n) -> [F(n)..]
+
+fibList :: (Integral a) => a -> [a]
+fibList 0 = [0]
+fibList 1 = [0,1]
+fibList n = lastList ++ [sum (drop (len-2) lastList)]
+  where lastList = fibList (n-1)
+        len = length lastList
+
+fib :: (Integral a) => a -> a
+fib n = last (fibList n)
+
+
   
 -- Look Up for Collatz Conjecture
-hailstone :: Integer -> Integer
+hailstone :: (Integral a) => a -> a
 hailstone n
   | mod n 2 == 0 = div n 2
   | otherwise = 3*n + 1
 
-hailstoneSeq :: Integer -> [Integer]
+hailstoneSeq :: (Integral a) => a -> [a]
 hailstoneSeq 1 = [1]
 hailstoneSeq n = n : hailstoneSeq (hailstone n)
 
@@ -146,7 +163,7 @@ sumEveryTwo (x:(y:zs)) = (x+y) : sumEveryTwo zs
 
 hailstoneLen :: Integer -> Integer
 hailstoneLen n = intListLength (hailstoneSeq n) - 1
- 
+        
 -- Algebraic Data Types : Chapter-2
 
 data Thing = Shoe
