@@ -110,6 +110,16 @@ filter' f (x:xs)
   | f x = x : filter' f xs
   | otherwise = filter' f xs
 
+foldl' :: (b -> a -> b) -> b -> [a] -> b
+foldl' f acc [] = acc
+foldl' f acc (x:xs) =  foldl' f (f acc x) xs
+
+sum' :: (Num a) => [a] -> a
+sum' ls = foldl (+) 0 ls 
+
+reverse' :: [a] -> [a]
+reverse' ls = foldl (flip (:)) [] ls
+
 factor :: (Integral a) => a -> a -> Bool
 factor n x = mod n x == 0 
 
@@ -136,8 +146,8 @@ fibList n = lastList ++ [sum (drop (len-2) lastList)]
   where lastList = fibList (n-1)
         len = length lastList
 
-fib :: (Integral a) => a -> a
-fib n = last (fibList n)
+fib :: (Integral a) => (a -> a)
+fib = (\n -> last (fibList n))
 
 
   
