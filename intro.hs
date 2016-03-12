@@ -101,8 +101,7 @@ zipwith' _ _ [] = []
 zipwith' f (x:xs) (y:ys) = (f x y) : zipwith' f xs ys
 
 map' :: (a -> b) -> [a] -> [b]
-map' _ [] = []
-map' f (x:xs) = f x : map' f xs
+map' f xs = foldr (\x acc -> f x : acc) [] xs 
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
@@ -114,15 +113,19 @@ foldl' :: (b -> a -> b) -> b -> [a] -> b
 foldl' f acc [] = acc
 foldl' f acc (x:xs) =  foldl' f (f acc x) xs
 
-sum' :: (Num a) => [a] -> a
-sum' ls = foldl (+) 0 ls 
+sum' :: (Num a) => ([a] -> a)
+sum' = foldl (+) 0 
 
 reverse' :: [a] -> [a]
 reverse' ls = foldl (flip (:)) [] ls
 
+elem' :: (Eq a) => a -> [a] -> Bool                         
+elem' e (x:xs) = foldl (\acc x -> (x == e) || acc) False xs
+
 factor :: (Integral a) => a -> a -> Bool
 factor n x = mod n x == 0 
 
+-- Gives list of factors of a given number n under (sqrt n) 
 factorList :: (Integral a) => a -> [a]
 factorList x = filter (factor x) [2..(floor (sqrt (fromIntegral x)))]
 
