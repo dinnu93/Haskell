@@ -1,3 +1,5 @@
+import qualified Data.List as L
+
 doubleMe :: Int -> Int
 doubleMe x = x + x
 
@@ -122,13 +124,59 @@ reverse' ls = foldl (flip (:)) [] ls
 elem' :: (Eq a) => a -> [a] -> Bool                         
 elem' e (x:xs) = foldl (\acc x -> (x == e) || acc) False xs
 
+sqrtSums :: Int
+sqrtSums = (+) 1 $ length $ takeWhile (<=1000) $ scanl1 (+) $ map sqrt [1..] 
+
 factor :: (Integral a) => a -> a -> Bool
 factor n x = mod n x == 0 
+
+--Point Free Style Function
+negativeMap :: (Num a) => ([a] -> [a])
+negativeMap  = map (negate . abs) 
+
+-- Using Data.List Module
+--uniqElements :: (Eq a) => ([a] -> Int)
+--uniqElements = length . L.nub
+
+data AJFriends = Dinnu | Pranav | Venkat deriving (Show)
+
+-- and say I have a function like this,
+
+isDinnu :: AJFriends -> Bool
+isDinnu Dinnu = True
+isDinnu _    = False
+
+
+--pairWiseIntSum :: [[Int]] -> [Int]
+--pairWiseIntSum = foldl (zipWith (+))  
+
+pairWiseIntSum :: [[Int]] -> [Int]
+pairWiseIntSum intList =  map sum $ L.transpose intList
+
+
+everyOther :: [a] -> [a]
+everyOther [] = []
+everyOther ls  = map (ls !!) $ filter even [0 .. (length ls)-1]
+
+ano :: [[Int]] -> [Int]
+ano = foldl1 (zipWith (+))
 
 -- Gives list of factors of a given number n under (sqrt n) 
 factorList :: (Integral a) => a -> [a]
 factorList x = filter (factor x) [2..(floor (sqrt (fromIntegral x)))]
 
+-- Gives nameValue of any name spelled in small letetrs 
+nameValue :: String -> Int
+nameValue  = sum . (map findChar) 
+
+findChar :: Char -> Int
+findChar c
+  | c `elem` charList = v
+  | otherwise = error "Just enter small letters Dumbass!"
+  where Just v =  L.findIndex (== c) charList
+        charList = ' ':['a'..'z']
+
+-- Prime number verification
 prime :: (Integral a) => a -> Bool
 prime x
   | x == 1 = False
