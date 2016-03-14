@@ -135,8 +135,8 @@ negativeMap :: (Num a) => ([a] -> [a])
 negativeMap  = map (negate . abs) 
 
 -- Using Data.List Module
---uniqElements :: (Eq a) => ([a] -> Int)
---uniqElements = length . L.nub
+uniqElements :: (Eq a) => ([a] -> Int)
+uniqElements = length . L.nub
 
 data AJFriends = Dinnu | Pranav | Venkat deriving (Show)
 
@@ -145,10 +145,6 @@ data AJFriends = Dinnu | Pranav | Venkat deriving (Show)
 isDinnu :: AJFriends -> Bool
 isDinnu Dinnu = True
 isDinnu _    = False
-
-
---pairWiseIntSum :: [[Int]] -> [Int]
---pairWiseIntSum = foldl (zipWith (+))  
 
 pairWiseIntSum :: [[Int]] -> [Int]
 pairWiseIntSum intList =  map sum $ L.transpose intList
