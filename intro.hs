@@ -172,6 +172,16 @@ findChar c
   where Just v =  L.findIndex (== c) charList
         charList = ' ':['a'..'z']
 
+-- splitWords splits words using <space> as delimeter
+splitWords :: String -> [String]
+splitWords s
+  | null s = error "Can't split an empty sentence"
+  | head s == ' ' = splitWords $ tail s
+  | ' ' `elem` s = [first] ++ (splitWords rest)
+  | otherwise = [s]
+  where (first, rest) = break (==' ') s
+
+    
 -- Prime number verification
 prime :: (Integral a) => a -> Bool
 prime x
