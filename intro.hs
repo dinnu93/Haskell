@@ -163,6 +163,8 @@ ano = foldl1 (zipWith (+))
 factorList :: (Integral a) => a -> [a]
 factorList x = filter (factor x) [2..(floor (sqrt (fromIntegral x)))]
 
+-- Function using Data Modules
+
 -- Gives nameValue of any name spelled in small letetrs 
 nameValue :: String -> Int
 nameValue  = sum . (map findChar) 
@@ -172,11 +174,17 @@ findChar c
   | C.isLetter c  =  C.ord (C.toLower c) - C.ord 'a' + 1 
   | otherwise = 0
 
--- Function using Data Modules
-
 -- splitWords splits words using <space> as delimeter
 splitWords :: String -> [String]
 splitWords s = filter (not . any C.isSpace) $ L.groupBy ((==) `F.on` C.isSpace) s
+
+
+-- Encoder and Decoder functions for simple sentences
+encode :: Int -> String -> String
+encode shift = map (C.chr . (+ shift) . C.ord)
+
+decode :: Int -> String -> String
+decode shift = encode (negate shift) 
 
 -- Prime number verification
 prime :: (Integral a) => a -> Bool
