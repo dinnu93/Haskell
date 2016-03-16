@@ -1,4 +1,6 @@
 import qualified Data.List as L
+import qualified Data.Char as C
+import qualified Data.Function as F
 
 doubleMe :: Int -> Int
 doubleMe x = x + x
@@ -166,22 +168,16 @@ nameValue :: String -> Int
 nameValue  = sum . (map findChar) 
 
 findChar :: Char -> Int
-findChar c
-  | c `elem` charList = v
-  | otherwise = error "Just enter small letters Dumbass!"
-  where Just v =  L.findIndex (== c) charList
-        charList = ' ':['a'..'z']
+findChar c 
+  | C.isLetter c  =  C.ord (C.toLower c) - C.ord 'a' + 1 
+  | otherwise = 0
+
+-- Function using Data Modules
 
 -- splitWords splits words using <space> as delimeter
 splitWords :: String -> [String]
-splitWords s
-  | null s = error "Can't split an empty sentence"
-  | head s == ' ' = splitWords $ tail s
-  | ' ' `elem` s = [first] ++ (splitWords rest)
-  | otherwise = [s]
-  where (first, rest) = break (==' ') s
+splitWords s = filter (not . any C.isSpace) $ L.groupBy ((==) `F.on` C.isSpace) s
 
-    
 -- Prime number verification
 prime :: (Integral a) => a -> Bool
 prime x
