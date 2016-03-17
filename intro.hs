@@ -288,7 +288,9 @@ personDesc = [ getName(person) ++ " : "  ++ (show (getAge(person))) | person <- 
 
 -- Lists
 
-data IntList = Empty | Cons Int IntList
+data IntList = Empty
+             | Cons Int IntList
+             deriving Show
 
 ls :: IntList
 ls = (Cons 1 (Cons 2 (Cons 3 (Cons 4 Empty))))
@@ -301,6 +303,20 @@ intListProduct :: IntList -> Int
 intListProduct Empty = 1
 intListProduct (Cons i ls) = i * intListProduct ls
 
+squareAll :: IntList -> IntList
+squareAll Empty = Empty
+squareAll (Cons l ls) = Cons (l^2) $ squareAll ls              
+
+mapIntList :: (Int -> Int) -> IntList -> IntList
+mapIntList _ Empty = Empty
+mapIntList f (Cons l ls) = Cons (f l) $ mapIntList f ls
+
+filterIntList :: (Int -> Bool) -> IntList -> IntList
+filterIntList _ Empty = Empty
+filterIntList p (Cons l ls)
+  | p l = Cons l $ filterIntList p ls
+  | otherwise = filterIntList p ls
+
 -- Trees
 
 data Tree = Leaf Char
@@ -309,3 +325,9 @@ data Tree = Leaf Char
 
 tree :: Tree
 tree = Node (Leaf 'a') 1 (Node (Leaf 'b') 2 (Leaf 'c'))
+
+-- Polymorphic Data Types
+
+data List t = E
+            | C t (List t)
+            deriving Show
