@@ -331,3 +331,9 @@ tree = Node (Leaf 'a') 1 (Node (Leaf 'b') 2 (Leaf 'c'))
 data List t = E
             | C t (List t)
             deriving Show
+
+
+stringFilter :: [String] -> [String]
+stringFilter sList = filter (\s -> C.isUpper $ (if (even (length s)) then (s !! ((div (length s) 2)-1)) else (s !! (div (length s) 2)))) sList  
+          
+
