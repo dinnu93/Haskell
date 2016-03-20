@@ -331,9 +331,27 @@ tree = Node (Leaf 'a') 1 (Node (Leaf 'b') 2 (Leaf 'c'))
 data List t = E
             | C t (List t)
             deriving Show
+            
+mapList :: (a -> b) -> List a -> List b 
+mapList _ E = E
+mapList f (C x xs) = C (f x) $ mapList f xs
+
+filterList :: (a -> Bool) -> (List a) -> (List a) 
+filterList _ E = E
+filterList p (C x xs) 
+    | p x = C x $ filterList p xs
+    | otherwise = filterList p xs
 
 
 stringFilter :: [String] -> [String]
-stringFilter sList = filter (\s -> C.isUpper $ (if (even (length s)) then (s !! ((div (length s) 2)-1)) else (s !! (div (length s) 2)))) sList  
-          
+stringFilter = filter (C.isUpper . midLetter)   
+  where halfLen s = div (length s) 2
+        midLetter s
+          | even (length s) = (s !! (halfLen s - 1))
+          | otherwise = (s !! halfLen s)
 
+-- Maybe Type Constructor Maybe
+
+safeHead :: [a] -> Maybe a
+safeHead [] = Nothing
+safeHead (x:xs) = Just x
