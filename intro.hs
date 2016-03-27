@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Function as F
@@ -317,14 +319,6 @@ filterIntList p (Cons l ls)
   | p l = Cons l $ filterIntList p ls
   | otherwise = filterIntList p ls
 
--- Trees
-
-data Tree = Leaf Char
-          | Node Tree Int Tree
-          deriving Show
-
-tree :: Tree
-tree = Node (Leaf 'a') 1 (Node (Leaf 'b') 2 (Leaf 'c'))
 
 -- Polymorphic Data Types
 
@@ -355,3 +349,49 @@ stringFilter = filter (C.isUpper . midLetter)
 safeHead :: [a] -> Maybe a
 safeHead [] = Nothing
 safeHead (x:xs) = Just x
+
+-- Type Classes & Polymorphism
+
+-- adding data type to a type class
+
+data Foo = F Int | G Char
+
+instance Eq Foo where
+  (F i1) == (F i2) = i1 == i2
+  (G c1) == (G c2) = c1 == c2
+  _ == _ = False
+
+  foo1 /= foo2 = not (foo1 == foo2)
+
+-- Eq being a special function we can define the above type class like this
+
+data Foo' = F' Int | G' Char
+          deriving (Eq, Ord, Show)
+
+                   
+-- Our own type class example
+
+class Listable a where
+  toList :: a -> [Int]
+
+instance Listable Int where
+  toList x = [x]
+
+instance Listable Bool where
+  toList True = [1]
+  toList False = [0]
+
+instance Listable [Int] where
+  toList = id
+
+data Tree a = Leaf | Node a (Tree a) (Tree a)
+
+instance Listable (Tree Int) where
+  toList Leaf = []
+  toList (Node x l r) = toList l ++ [x] ++ toList r
+
+sumL x = sum $ toList x
+
+instance (Listable a, Listable b) => Listable (a,b) where
+  toList (a,b) = toList a ++ toList b
+  
