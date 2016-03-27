@@ -395,3 +395,14 @@ sumL x = sum $ toList x
 instance (Listable a, Listable b) => Listable (a,b) where
   toList (a,b) = toList a ++ toList b
   
+-- Sieve of Erathothenes
+
+sieveOut :: [Integer] -> [Integer]
+sieveOut [] = []
+sieveOut (x:xs) = x : sieveOut (filter (\y -> mod y x /= 0) xs)
+
+-- Gives primes below N using sieve of erathothenes
+sievePrimes :: Integer -> [Integer]
+sievePrimes n
+  | n < 2 = error "No Primes below 2" 
+  |otherwise = sieveOut [2..n]
