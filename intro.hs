@@ -397,6 +397,7 @@ instance (Listable a, Listable b) => Listable (a,b) where
   
 -- Sieve of Erathothenes
 
+-- Sieves out primes from a increasingly sorted list of Integers
 sieveOut :: [Integer] -> [Integer]
 sieveOut [] = []
 sieveOut (x:xs) = x : sieveOut (filter (\y -> mod y x /= 0) xs)
@@ -406,3 +407,9 @@ sievePrimes :: Integer -> [Integer]
 sievePrimes n
   | n < 2 = error "No Primes below 2" 
   |otherwise = sieveOut [2..n]
+
+-- Gives the nth prime Number
+nthPrime :: Int -> Integer
+nthPrime n
+  | n < 1 = error "Invalid input"
+  | otherwise = last . take n . sieveOut $ [2..]
