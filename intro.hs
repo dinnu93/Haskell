@@ -3,6 +3,7 @@
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Function as F
+import Data.Array 
 
 doubleMe :: Int -> Int
 doubleMe x = x + x
@@ -413,3 +414,13 @@ nthPrime :: Int -> Integer
 nthPrime n
   | n < 1 = error "Invalid input"
   | otherwise = last . take n . sieveOut $ [2..]
+
+-- Lazy Evaluation
+
+f1 :: Maybe a -> [Maybe a]
+f1 m = [m, m]
+
+f2 :: Maybe a -> [a]
+f2 Nothing = []
+f2 (Just x) = [x]
+
