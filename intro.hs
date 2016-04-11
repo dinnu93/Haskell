@@ -3,7 +3,9 @@
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Function as F
+import qualified Data.Map as M
 import Data.Array 
+
 
 doubleMe :: Int -> Int
 doubleMe x = x + x
@@ -423,4 +425,18 @@ f1 m = [m, m]
 f2 :: Maybe a -> [a]
 f2 Nothing = []
 f2 (Just x) = [x]
+
+-- Data.Map
+
+phoneBook =   
+  [("betty","555-2938")  
+  ,("bonnie","452-2928")  
+  ,("patsy","493-2928")  
+  ,("lucille","205-2928")  
+  ,("wendy","939-8282")  
+  ,("penny","853-2492")  
+  ] 
+
+findKey :: (Eq k) => k -> [(k,v)] -> Maybe v
+findKey key = foldr (\(k,v) acc -> if key == k then Just v else acc) Nothing 
 
