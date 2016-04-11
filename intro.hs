@@ -4,6 +4,7 @@ import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Function as F
 import qualified Data.Map as M
+import qualified Data.Set as S
 import Data.Array 
 
 
@@ -426,17 +427,36 @@ f2 :: Maybe a -> [a]
 f2 Nothing = []
 f2 (Just x) = [x]
 
--- Data.Map
+-- Data.Map as M
 
 phoneBook =   
   [("betty","555-2938")  
+  ,("betty","342-2492")  
   ,("bonnie","452-2928")  
   ,("patsy","493-2928")  
+  ,("patsy","943-2929")  
+  ,("patsy","827-9162")  
   ,("lucille","205-2928")  
   ,("wendy","939-8282")  
   ,("penny","853-2492")  
-  ] 
-
+  ,("penny","555-2111")  
+  ]
+  
 findKey :: (Eq k) => k -> [(k,v)] -> Maybe v
 findKey key = foldr (\(k,v) acc -> if key == k then Just v else acc) Nothing 
 
+phoneBookMap = M.fromListWith (\x y -> x ++ " , " ++ y) phoneBook
+
+-- Our own implementation of Map.fromList
+fromList' :: (Ord k) => [(k,v)] -> M.Map k v
+fromList' = foldr (\(k,v) acc -> M.insert k v acc) M.empty
+
+-- Data.Set as S
+
+text1 = "I just had an anime dream. Anime... Reality... Are they so different?"  
+text2 = "The old man left his garbage can out and now his trash is all over my lawn!"
+
+set1 = S.fromList text1
+set2 = S.fromList text2
+
+intersect = S.intersection set1 set2
