@@ -460,3 +460,25 @@ set1 = S.fromList text1
 set2 = S.fromList text2
 
 intersect = S.intersection set1 set2
+
+-- Types & Typeclasses
+
+data Point = Point Float Float
+           deriving (Show, Eq) 
+
+data Line = Line Point Point
+          deriving (Show, Eq)
+
+data Circle = Circle Point Float
+            deriving (Show, Eq)
+
+--Adds two Points
+addP :: Point -> Point -> Point
+addP (Point x1 y1) (Point x2 y2) = Point (x1 + x2) (y1 + y2)
+
+-- Record Syntax
+
+data Car = Car { company :: String,
+                 model :: String,
+                 year :: Integer
+               } deriving Show
