@@ -525,6 +525,7 @@ instance Show Fraction where
   show (Fraction x y)
     | y == 0 = "Undefined"
     | x == 0 = show 0
+    | y == 1 = show x
     | otherwise = show (div x g) ++ "/" ++ show (div y g)
     where g = gcd x y
 
@@ -537,4 +538,10 @@ instance Eq Fraction where
           g2 = gcd x2 y2
   
   
-
+instance Num Fraction where
+  (+) (Fraction x1 y1) (Fraction x2 y2) = Fraction (x1*y2 + x2*y1) (y1*y2)
+  (*) (Fraction x1 y1) (Fraction x2 y2) = Fraction (x1*x2) (y1*y2)
+  abs (Fraction x y) = Fraction (abs x) y
+  signum (Fraction x y) = Fraction (signum x) 1
+  fromInteger x = Fraction x 1
+  negate (Fraction x y) = Fraction (negate x) y
