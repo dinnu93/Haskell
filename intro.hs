@@ -482,3 +482,59 @@ data Car = Car { company :: String,
                  model :: String,
                  year :: Integer
                } deriving Show
+
+-- Type Synonyms
+
+type AssocList k v = [(k,v)]
+
+-- Student locker
+
+data LockerState = Taken | Free deriving (Show, Eq)
+
+type Code = String
+
+type LockerMap = M.Map Int (LockerState, Code)
+
+lockerLookup :: Int -> LockerMap -> Either String Code
+lockerLookup lockerNumber map =
+  case M.lookup lockerNumber map of
+    Nothing -> Left $ "Locker Number " ++ show lockerNumber ++ " doesn't exist!"
+    Just (state, code) -> if state /= Taken
+                          then Right code
+                          else Left $ "Locker " ++ show lockerNumber ++ " already taken!"
+                                  
+
+lockers :: LockerMap  
+lockers = M.fromList   
+  [(100,(Taken,"ZD39I"))  
+  ,(101,(Free,"JAH3I"))  
+  ,(103,(Free,"IQSA9"))  
+  ,(105,(Free,"QOTSA"))  
+  ,(109,(Taken,"893JJ"))  
+  ,(110,(Taken,"99292"))  
+  ]  
+
+-- Typeclasses
+
+-- Fraction Type for dealing with fractions like 1/2 & 1/3 because evaluating
+-- them will give an approximation we don't need.
+
+data Fraction = Fraction Integer Integer
+
+instance Show Fraction where
+  show (Fraction x y)
+    | y == 0 = "Undefined"
+    | x == 0 = show 0
+    | otherwise = show (div x g) ++ "/" ++ show (div y g)
+    where g = gcd x y
+
+instance Eq Fraction where
+  (==) (Fraction x1 y1) (Fraction x2 y2)
+    | (y1 == 0) || (y2 == 0) = False
+    | (x1 == 0) && (x2 == 0) = True
+    | otherwise = ((div x1 g1) == (div x2 g2)) && ((div y1 g1) == (div y2 g2))
+    where g1 = gcd x1 y1
+          g2 = gcd x2 y2
+  
+  
+
