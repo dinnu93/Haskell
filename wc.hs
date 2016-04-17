@@ -11,7 +11,7 @@ lineCount :: String -> Int
 lineCount = length .lines
 
 wordCount :: String -> Int
-wordCount = sum . map length . map words . lines
+wordCount = sum . map (length . words) . lines
 
 charCount :: String -> Int
 charCount = length 
