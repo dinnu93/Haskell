@@ -2,16 +2,16 @@ main = do
   putStrLn "Enter the file path that you need a Word Count of"
   path <- getLine
   file <- readFile path
-  putStrLn $ "Line Count is : " ++ (show $ length $ lines file)
-  putStrLn $ "Word Count is : " ++ (show $ wordCount file)
-  putStrLn $ "Character Count : " ++ (show $ charCount file)
+  putStr $ (show $ lineCount file) ++ " "
+  putStr $ (show $ wordCount file) ++ " "
+  putStr $ (show $ charCount file) ++ "\n"
   
 
 lineCount :: String -> Int
-lineCount = length .lines
+lineCount = length . lines
 
 wordCount :: String -> Int
-wordCount = sum . map (length . words) . lines
+wordCount = length . words
 
 charCount :: String -> Int
-charCount = length 
+charCount = length
