@@ -389,6 +389,7 @@ instance Listable [Int] where
   toList = id
 
 data Tree a = Leaf | Node a (Tree a) (Tree a)
+            deriving Show
 
 instance Listable (Tree Int) where
   toList Leaf = []
@@ -545,3 +546,10 @@ instance Num Fraction where
   signum (Fraction x y) = Fraction (signum x) 1
   fromInteger x = Fraction x 1
   negate (Fraction x y) = Fraction (negate x) y
+
+
+-- Functors
+
+instance Functor Tree where
+  fmap f Leaf = Leaf
+  fmap f (Node x lTree rTree) = Node (f x) (fmap f lTree) (fmap f rTree)
