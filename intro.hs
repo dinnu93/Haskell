@@ -553,3 +553,6 @@ instance Num Fraction where
 instance Functor Tree where
   fmap f Leaf = Leaf
   fmap f (Node x lTree rTree) = Node (f x) (fmap f lTree) (fmap f rTree)
+
+-- Monoids
+
