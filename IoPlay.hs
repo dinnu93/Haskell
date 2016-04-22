@@ -1,6 +1,6 @@
 import Data.Char
 
-main = interact respPalindrome
+main = putStrLn "Please enter a number: " >> (readLn >>= (\n -> putStrLn $ show $ n+1)) 
 
 shortLinesOnly :: String -> String
 shortLinesOnly = unlines . filter ((<10) . length) .lines 
