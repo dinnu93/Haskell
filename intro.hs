@@ -556,3 +556,10 @@ instance Functor Tree where
 
 -- Monoids
 
+instance Monoid Integer where
+  mempty = 1
+  mappend = (*)
+
+instance Monoid Bool where
+  mempty = True
+  mappend = (&&)
