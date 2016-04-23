@@ -1,11 +1,12 @@
+import System.Environment
+
 main = do
-  putStrLn "Enter the file path that you need a Word Count of"
-  path <- getLine
-  file <- readFile path
+  args <- getArgs
+  file <- readFile $ args !! 0
   putStr $ (show $ lineCount file) ++ " "
   putStr $ (show $ wordCount file) ++ " "
-  putStr $ (show $ charCount file) ++ "\n"
-  
+  putStr $ (show $ charCount file) ++ " "
+  putStrLn $ args !! 0 
 
 lineCount :: String -> Int
 lineCount = length . lines
