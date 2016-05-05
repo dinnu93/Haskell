@@ -585,3 +585,17 @@ ex01 = Employee <$> m_name1 <*> m_phone1
 ex02 = Employee <$> m_name1 <*> m_phone2
 ex03 = Employee <$> m_name2 <*> m_phone1
 ex04 = Employee <$> m_name2 <*> m_phone2
+
+-- Monads
+
+check :: Int -> Maybe Int
+check n | n < 10 = Just n
+        | otherwise = Nothing
+
+halve :: Int -> Maybe Int
+halve n | even n = Just $ n `div` 2
+        | otherwise = Nothing
+
+
+
+         
